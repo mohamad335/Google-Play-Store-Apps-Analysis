@@ -1,0 +1,32 @@
+# Google Play Store Apps Analysis
+
+This project analyzes the Google Play Store apps dataset to provide insights into app ratings and content ratings. The analysis includes data cleaning, sorting, and visualization using a donut chart.
+
+## Requirements
+
+- Python 3.x
+- pandas
+- plotly
+- kaleido (for saving the chart as an image)
+
+## Installation
+
+1. Clone the repository or download the code.
+2. Install the required packages using pip:
+
+```sh
+pip install pandas plotly kaleido
+
+Usage
+Place the apps.csv file in the same directory as the script.
+Run the main.py script:
+The script will:
+Load the dataset.
+Clean the dataset by removing rows with missing values and duplicates.
+Sort the dataset by app ratings.
+Create and display a donut chart of content ratings.
+Save the donut chart as an image file named content_rating_donut_chart.png.
+Load the dataset: Reads the apps.csv file into a pandas DataFrame.
+Data Cleaning: Removes rows with missing values and duplicates based on 'App', 'Type', and 'Price' columns.
+Sorting: Sorts the DataFrame by 'Rating' in descending order.
+Visualization: Creates a donut chart of content ratings using Plotly and saves it as an image.
