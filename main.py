@@ -105,6 +105,23 @@ def top_geners(df):
     bar.update_layout(xaxis_title='Genres', yaxis_title='Number of Apps', coloraxis_showscale=False)
     bar.write_image('images/top_geners.png')
     bar.show()
+def df_free_vs_paid(df):
+    """create a bar chart to visualize the free vs paid apps."""
+    free_vs_paid = df_clean.groupby(['Type', 'Category'],as_index=False).agg({'App': pd.Series.count})
+    bar = px.bar(free_vs_paid,
+                  x='Category'
+                 , y='App'
+                 , color='Type'
+                 , barmode='group'
+                 , title='Free vs Paid Apps by Category'
+                 )
+    bar.update_layout(xaxis_title='Category',
+                    yaxis_title='Number of Apps',
+                    xaxis={'categoryorder':'total descending'},
+                    yaxis=dict(type='log'))
+    bar.update_xaxes(categoryorder='total descending')
+    bar.write_image('images/free_vs_paid.png')
+    bar.show()
+df_free_vs_paid(df_clean)
 
-top_geners(df_clean)
     
