@@ -41,11 +41,11 @@ df_clean[['App', 'Price']].groupby('Price').count()
 # Remove rows with 'Price' greater than 250
 df_clean = df_clean[df_clean['Price'] < 250]
 df_clean.sort_values('Price', ascending=False).head(5)
+df_clean['Revenue']=df_clean['Price'] * df_clean['Installs']
  # Group the data by 'Category' and calculate the total number of installs
 category_installs = df_clean.groupby('Category').agg({'Installs': pd.Series.sum})
 category_installs.sort_values('Installs', ascending=True, inplace=True)
 def category_revenue(df):
-    df_clean.to_csv('data/apps_clean.csv', index=False)
     #top 10 categories with highest revenue estimate
     top10_category = df_clean.Category.value_counts()[:10]
     # Create a bar chart to visualize the top 10 categories with the highest revenue estimate
@@ -122,6 +122,41 @@ def df_free_vs_paid(df):
     bar.update_xaxes(categoryorder='total descending')
     bar.write_image('images/free_vs_paid.png')
     bar.show()
-df_free_vs_paid(df_clean)
+
+def installs_paid_apps():
+    """"create a box plot to know how many downloads are paid apps giving ups """
+    df_paid_apps = df_clean[df_clean['Type'] == 'Paid']
+    box = px.box(df_paid_apps, 
+             x='Category', 
+             y='Revenue',
+             title='How Much Can Paid Apps Earn?')
+ 
+    box.update_layout(xaxis_title='Category',
+                  yaxis_title='Paid App Ballpark Revenue',
+                  xaxis={'categoryorder':'min ascending'},
+                  yaxis=dict(type='log'))
+    box.write_image('images/installs_paid_apps.png')
+ 
+ 
+    box.show()
+installs_paid_apps()
+    
+    
+def meadian_price_catagory():
+    """create a box plot to know the meadian price of each category"""
+    df_paid= df_clean[df_clean['Type'] == 'Paid']
+    box = px.box(df_paid,
+             x='Category',
+             y="Price",
+             title='Price per Category')
+    box.update_layout(xaxis_title='Category',
+                    yaxis_title='Price',
+                    xaxis={'categoryorder':'max descending'},
+                    yaxis=dict(type='log'))
+    box.write_image('images/median_price_category.png')
+    box.show()
+
+ 
+    
 
     
